@@ -12,5 +12,51 @@
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
+  },
+  "resources/js/dashboard.js": {
+    "file": "assets/dashboard-rOfTGB_3.js",
+    "name": "dashboard",
+    "src": "resources/js/dashboard.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/sections/listar.js",
+      "resources/js/sections/sincronizar.js",
+      "resources/js/sections/editar.js",
+      "resources/js/sections/criar.js"
+    ]
+  },
+  "resources/js/sections/criar.js": {
+    "file": "assets/criar-DOiKdP86.js",
+    "name": "criar",
+    "src": "resources/js/sections/criar.js",
+    "isEntry": true,
+    "isDynamicEntry": true
+  },
+  "resources/js/sections/editar.js": {
+    "file": "assets/editar-Bp94wNPl.js",
+    "name": "editar",
+    "src": "resources/js/sections/editar.js",
+    "isEntry": true,
+    "isDynamicEntry": true
+  },
+  "resources/js/sections/exibir.js": {
+    "file": "assets/exibir-l0sNRNKZ.js",
+    "name": "exibir",
+    "src": "resources/js/sections/exibir.js",
+    "isEntry": true
+  },
+  "resources/js/sections/listar.js": {
+    "file": "assets/listar-pvY4edvQ.js",
+    "name": "listar",
+    "src": "resources/js/sections/listar.js",
+    "isEntry": true,
+    "isDynamicEntry": true
+  },
+  "resources/js/sections/sincronizar.js": {
+    "file": "assets/sincronizar-CYewGr9k.js",
+    "name": "sincronizar",
+    "src": "resources/js/sections/sincronizar.js",
+    "isEntry": true,
+    "isDynamicEntry": true
   }
 }
