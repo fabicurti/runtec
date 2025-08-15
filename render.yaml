@@ -8,9 +8,7 @@ services:
       - key: APP_ENV
         value: production
       - key: APP_KEY
-        fromDatabase:
-          name: app_keys
-          key: laravel_app_key
+        value: base64:8KTy+KBfZ61QGqjgmHx/eZyVooyxt5MTawfaGveSKWI=
       - key: APP_DEBUG
         value: false
       - key: DB_CONNECTION
