@@ -17,11 +17,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # 4. Configura diretório de trabalho
 WORKDIR /var/www/html
 
-# 5. Copia arquivos de dependências primeiro (otimização de cache Docker)
-COPY package.json package-lock.json vite.config.js ./
-COPY resources/css resources/css
-COPY resources/js resources/js
-
 # 7. Copia o resto do projeto
 COPY . .
 
