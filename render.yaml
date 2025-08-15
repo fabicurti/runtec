@@ -6,11 +6,13 @@ services:
     region: oregon
     envVars:
       - key: APP_ENV
-        value: local
+        value: production
       - key: APP_KEY
-        sync: false
+        fromDatabase:
+          name: app_keys
+          key: laravel_app_key
       - key: APP_DEBUG
-        value: true
+        value: false
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST
@@ -22,4 +24,6 @@ services:
       - key: DB_USERNAME
         value: avnadmin
       - key: DB_PASSWORD
-        sync: false
+        fromDatabase:
+          name: db_credentials
+          key: db_password

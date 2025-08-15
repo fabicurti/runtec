@@ -15,22 +15,22 @@ WORKDIR /var/www/html
 # Copia arquivos do projeto
 COPY . .
 
+# Configuração do Apache
+COPY apache.conf /etc/apache2/sites-available/000-default.conf
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 # Permissões corretas
-RUN chmod -R 775 storage bootstrap/cache \
-    && chown -R www-data:www-data storage bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 storage bootstrap/cache
 
 # Instala dependências do Laravel
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Corrige o erro de DirectoryIndex
-RUN echo "DirectoryIndex index.php index.html" >> /etc/apache2/apache2.conf
-
-# Garante que o Laravel não quebre no boot
-RUN php artisan config:clear || true \
-    && php artisan cache:clear || true \
-    && php artisan view:clear || true \
-    && php artisan route:clear || true \
-    && php artisan config:cache || true
+# Limpa cache
+RUN php artisan config:clear \
+    && php artisan cache:clear \
+    && php artisan view:clear \
+    && php artisan route:clear
 
 EXPOSE 80
 
