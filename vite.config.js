@@ -17,6 +17,12 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/js/dashboard.js',
+                'resources/js/sections/criar.js',
+                'resources/js/sections/editar.js',
+                'resources/js/sections/exibir.js',
+                'resources/js/sections/listar.js',
+                'resources/js/sections/sincronizar.js',
             ],
         },
     },
