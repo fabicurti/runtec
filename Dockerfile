@@ -29,6 +29,8 @@ RUN chmod -R 775 storage bootstrap/cache \
 RUN php artisan config:clear \
     && php artisan route:list
 
+RUN php artisan migrate --force
+
 EXPOSE 80
 
 CMD ["apache2-foreground"]
