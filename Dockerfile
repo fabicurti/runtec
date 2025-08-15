@@ -28,7 +28,7 @@ FROM php:8.2-apache
 
 # 1) Dependências do sistema e extensões PHP
 RUN apt-get update && apt-get install -y \
-    git unzip libzip-dev libpng-dev libxml2-dev zip curl gnupg \
+    git unzip libzip-dev libpng-dev libxml2-dev zip curl gnupg libonig-dev \
  && docker-php-ext-install pdo_mysql mbstring zip exif pcntl \
  && a2enmod rewrite \
  && rm -rf /var/lib/apt/lists/*
