@@ -54,13 +54,19 @@ RUN chown -R www-data:www-data storage bootstrap/cache public/build \
 
 # 8) Configuração do Apache (vhost apontando para /public)
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
-RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \
+
+# Adiciona escuta nas portas 80 e 10000
+RUN echo "Listen 80" >> /etc/apache2/ports.conf \
+ && echo "Listen 10000" >> /etc/apache2/ports.conf \
+ && echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \
  && a2enconf servername \
- && a2dissite default-ssl 000-default.conf.default || true \
+ && a2dissite default-ssl || true \
  && a2ensite 000-default
 
 # 9) Porta e entrypoint
 EXPOSE 80
+EXPOSE 10000
+
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
