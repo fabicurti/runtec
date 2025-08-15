@@ -20,8 +20,11 @@ WORKDIR /var/www/html
 # 7. Copia o resto do projeto
 COPY . .
 
-# 6. Instala dependências do Node e build
-RUN npm install && npm run build
+# 1. Instala dependências do Node
+RUN npm install
+
+# 2. Gera os assets do Vite
+RUN npm run build
 
 # 8. Instala dependências do PHP
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
