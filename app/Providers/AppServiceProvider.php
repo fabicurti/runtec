@@ -19,6 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Vite::useManifest(public_path('build/manifest.json'));
     }
 }
