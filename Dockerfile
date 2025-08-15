@@ -38,10 +38,12 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-d
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache public/build
 
-# 11. Configura Apache
+# 11. Configura Apache (último passo antes da porta/entrypoint)
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
+
 RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \
     && a2enconf servername \
+    && a2dissite default-ssl 000-default.conf.default || true \
     && a2ensite 000-default
 
 # 12. Porta de exposição
@@ -51,4 +53,3 @@ EXPOSE 80
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
-

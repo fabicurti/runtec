@@ -1,3 +1,5 @@
+echo "[DEBUG] VirtualHosts ativos:"
+apache2ctl -S
 #!/bin/bash
 set -e
 
