@@ -1,10 +1,11 @@
-echo "[DEBUG] VirtualHosts ativos:"
-apache2ctl -S
 #!/bin/bash
 set -e
 
 # Porta que o Render fornece
 PORT="${PORT:-8080}"
+
+echo "[DEBUG] VirtualHosts ativos:"
+apache2ctl -S
 
 # Ajusta Apache para escutar na PORT do ambiente
 if grep -q "Listen 80" /etc/apache2/ports.conf; then
