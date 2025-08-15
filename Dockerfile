@@ -22,6 +22,9 @@ RUN chmod -R 775 storage bootstrap/cache \
 # Instala dependências do Laravel
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
+# Corrige o erro de DirectoryIndex
+RUN echo "DirectoryIndex index.php index.html" >> /etc/apache2/apache2.conf
+
 # Garante que o Laravel não quebre no boot
 RUN php artisan config:clear || true \
     && php artisan cache:clear || true \
