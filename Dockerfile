@@ -31,12 +31,6 @@ RUN chown -R www-data:www-data /var/www/html \
 # Instala dependências do Laravel
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Limpa cache
-RUN php artisan config:clear \
-    && php artisan cache:clear \
-    && php artisan view:clear \
-    && php artisan route:clear
-
 EXPOSE 80
 
 CMD ["apache2-foreground"]
