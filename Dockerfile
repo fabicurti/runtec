@@ -54,10 +54,14 @@ RUN chown -R www-data:www-data storage bootstrap/cache public/build \
 
 # 8) Configuração do Apache (vhost apontando para /public)
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
+
+# Garante que só seu site está ativo
 RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \
  && a2enconf servername \
- && a2dissite default-ssl 000-default.conf.default || true \
+ && a2dissite default-ssl || true \
+ && a2dissite 000-default || true \
  && a2ensite 000-default
+
 
 # 9) Porta e entrypoint
 EXPOSE 10000
