@@ -12,7 +12,7 @@ export default defineConfig({
     build: {
         manifest: true,
         outDir: 'public/build',
-        manifestFile: 'manifest.json', // força nome correto
+        manifestFile: 'manifest.json',
         rollupOptions: {
             input: [
                 'resources/css/app.css',
@@ -26,6 +26,14 @@ export default defineConfig({
             ],
         },
     },
+    server: {
+        https: true,
+        host: '0.0.0.0',
+        port: 5173,
+        strictPort: true,
+        hmr: {
+            host: 'runtec.onrender.com',
+            protocol: 'wss',
+        },
+    },
 });
-
-
