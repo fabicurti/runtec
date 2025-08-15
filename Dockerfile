@@ -31,13 +31,11 @@ COPY . .
 # 8. Instala dependências do PHP
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
-# 9. Configura Apache 
+# 9. Configura Apache
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
 RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \
     && a2enconf servername \
     && a2ensite 000-default \
-    && sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf \
-    && sed -ri -e 's!/var/www/!/var/www/html/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 # 10. Ajusta permissões
 RUN chown -R www-data:www-data /var/www/html \
