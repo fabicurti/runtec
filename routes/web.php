@@ -6,12 +6,12 @@
     Route::get('/ping', function () {
         return 'pong';
     });
-    Route::get('/cache-now', function () {
-        \Artisan::call('config:cache');
-        \Artisan::call('route:cache');
+    Route::get('/fix-views', function () {
+        \Artisan::call('view:clear');
         \Artisan::call('view:cache');
-        return 'Cache feito!';
+        return 'Views recompiladas!';
     });
+
 
 
 
