@@ -60,7 +60,7 @@ RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \
  && a2ensite 000-default
 
 # 9) Porta e entrypoint
-EXPOSE 80
+EXPOSE 10000
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
