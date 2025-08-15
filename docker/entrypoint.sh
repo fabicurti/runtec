@@ -28,4 +28,10 @@ php artisan route:clear || true
 php artisan view:clear || true
 
 echo "Apache ouvindo na porta ${PORT}"
+echo "[DEBUG] Conteúdo de /var/www/html:"
+ls -la /var/www/html
+
+echo "[DEBUG] Conteúdo de /var/www/html/public:"
+ls -la /var/www/html/public
+
 exec apache2-foreground

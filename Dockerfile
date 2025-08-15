@@ -24,7 +24,8 @@ COPY composer.json composer.lock ./
 # 6. Instala dependências do Node
 RUN npm ci
 
-# 7. Copia todo o restante do projeto
+# 7. Copia o restante do projeto
+WORKDIR /var/www/html
 COPY . .
 
 # 8. Gera build do Vite (cria public/build/manifest.json)
