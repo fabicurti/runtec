@@ -33,9 +33,14 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-d
 
 # 9. Configura Apache
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
+
 RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \
     && a2enconf servername \
-    && a2ensite 000-default \
+    && a2ensite 000-default
+
+# 10. Ajusta permissões
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 storage bootstrap/cache public/build
 
 # 10. Ajusta permissões
 RUN chown -R www-data:www-data /var/www/html \
