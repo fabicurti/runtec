@@ -14,7 +14,6 @@ COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 RUN chmod -R 775 storage bootstrap/cache
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
 EXPOSE 80
 
