@@ -1,6 +1,6 @@
 *.log
 .DS_Store
-Dockerfile
+Dockerfile.dev
 docker-compose.yml
 .env
 .env.backup
