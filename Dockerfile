@@ -1,39 +1,34 @@
 FROM php:8.2-apache
 
-# Instala extensões necessárias
+# Instala dependências
 RUN apt-get update && apt-get install -y \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    unzip \
-    git \
-    curl \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+    git unzip libzip-dev libpng-dev libonig-dev libxml2-dev zip curl \
+    && docker-php-ext-install pdo_mysql mbstring zip exif pcntl \
+    && a2enmod rewrite
 
-# Instala Composer
+# Copia o Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Copia o projeto
-COPY . /var/www/html
 
 # Define diretório de trabalho
 WORKDIR /var/www/html
 
-# Permissões
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 storage bootstrap/cache
+# Copia arquivos do projeto
+COPY . .
 
-# Instala dependências e gera cache
-RUN composer install --no-interaction --prefer-dist \
-    && php artisan config:clear \
-    && php artisan cache:clear \
-    && php artisan view:clear \
-    && php artisan route:clear \
-    && php artisan config:cache
+# Permissões corretas
+RUN chmod -R 775 storage bootstrap/cache \
+    && chown -R www-data:www-data storage bootstrap/cache
 
-# Habilita mod_rewrite
-RUN a2enmod rewrite
+# Instala dependências do Laravel
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Define porta
+# Garante que o Laravel não quebre no boot
+RUN php artisan config:clear || true \
+    && php artisan cache:clear || true \
+    && php artisan view:clear || true \
+    && php artisan route:clear || true \
+    && php artisan config:cache || true
+
 EXPOSE 80
+
+CMD ["apache2-foreground"]
