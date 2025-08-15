@@ -1,53 +1,50 @@
 FROM php:8.2-apache
 
-# 1. Instala dependências básicas (PHP)
+# 1. Instala dependências básicas do PHP
 RUN apt-get update && apt-get install -y \
     git unzip libzip-dev libpng-dev libonig-dev libxml2-dev zip curl gnupg \
     && docker-php-ext-install pdo_mysql mbstring zip exif pcntl \
     && a2enmod rewrite
 
-# 2. Instala Node.js 20.x (compatível com seu package.json)
+# 2. Instala Node.js 20.x + npm atualizado
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g npm@latest
 
-# 3. Configura Composer
+# 3. Copia Composer do container oficial
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 4. Configura diretório de trabalho
+# 4. Define diretório de trabalho
 WORKDIR /var/www/html
 
-# 7. Copia o resto do projeto
+# 5. Copia apenas arquivos de dependências do Node e do PHP para instalar mais rápido
+COPY package*.json vite.config.js ./
+COPY composer.json composer.lock ./
+
+# 6. Instala dependências do Node
+RUN npm ci
+
+# 7. Copia todo o restante do projeto
 COPY . .
 
-# 1. Instala dependências do Node
-RUN npm install
-
-# 2. Gera os assets do Vite
+# 8. Gera build do Vite (cria public/build/manifest.json)
 RUN npm run build
 
-# 8. Instala dependências do PHP
+# 9. Instala dependências do PHP
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
-# 9. Configura Apache
-COPY apache.conf /etc/apache2/sites-available/000-default.conf
+# 10. Ajusta permissões
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 storage bootstrap/cache public/build
 
+# 11. Configura Apache
+COPY apache.conf /etc/apache2/sites-available/000-default.conf
 RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \
     && a2enconf servername \
     && a2ensite 000-default
 
-# 10. Ajusta permissões
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 storage bootstrap/cache public/build
-
-# 10. Ajusta permissões
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 storage bootstrap/cache public/build
-
+# 12. Porta de exposição
 EXPOSE 80
-# Fallback para o manifest (apenas para desenvolvimento)
-RUN if [ ! -f "public/build/manifest.json" ]; then \
-    mkdir -p public/build && \
-    echo '{"resources/js/app.js":{"file":"assets/app.js"}}' > public/build/manifest.json; \
-    fi
+
+# 13. Comando inicial
 CMD ["apache2-foreground"]
