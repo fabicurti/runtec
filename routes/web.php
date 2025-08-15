@@ -2,7 +2,7 @@
     use App\Http\Controllers\NoticiaController;
     use App\Http\Controllers\ProfileController;
     use Illuminate\Support\Facades\Route;
-    
+
     Route::get('/ping', function () {
         return 'pong';
     });
