@@ -6,7 +6,7 @@ services:
     region: oregon
     envVars:
       - key: APP_ENV
-        value: production
+        value: local
       - key: APP_KEY
         sync: false
       - key: APP_DEBUG
