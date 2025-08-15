@@ -22,11 +22,11 @@ COPY package.json package-lock.json vite.config.js ./
 COPY resources/css resources/css
 COPY resources/js resources/js
 
-# 6. Instala dependências do Node e build
-RUN npm install && npm run build
-
 # 7. Copia o resto do projeto
 COPY . .
+
+# 6. Instala dependências do Node e build
+RUN npm install && npm run build
 
 # 8. Instala dependências do PHP
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
