@@ -2,9 +2,9 @@
 FROM node:20-alpine AS assets
 WORKDIR /app
 
-# Copia apenas arquivos de dependência e configs para aproveitar cache
+# Copia dependências e código necessários para o build
 COPY package*.json vite.config.js ./
-# Caso use Tailwind/PostCSS/etc., descomente:
+# Se você usa Tailwind/PostCSS/etc., descomente as linhas abaixo:
 # COPY tailwind.config.* postcss.config.* ./
 
 # Instala dependências do Node
@@ -13,10 +13,14 @@ RUN npm ci
 # Copia restante do código-fonte
 COPY . .
 
-# Gera os assets (public/build + manifest.json)
+# Gera os assets e garante que o manifest esteja no lugar certo
 RUN npm run build \
+ && if [ -f public/build/.vite/manifest.json ]; then \
+      mv public/build/.vite/manifest.json public/build/manifest.json; \
+    fi \
  && ls -l public/build \
  && test -f public/build/manifest.json
+
 
 
 # ========= APP (PHP + Apache) =========
