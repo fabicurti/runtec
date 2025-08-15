@@ -12,6 +12,13 @@
         return 'Views recompiladas!';
     });
 
+    Route::get('/fix-cache', function () {
+        Artisan::call('config:clear');
+        Artisan::call('view:clear');
+        Artisan::call('route:clear');
+        Artisan::call('cache:clear');
+        return 'Cache limpo!';
+    });
 
 
 

@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: runtec-app
+    env: php
+    plan: free
+    buildCommand: |
+      composer install --optimize-autoloader --no-dev
+      php artisan config:clear
+      php artisan view:clear
+      php artisan route:clear
+      php artisan cache:clear
+      php artisan config:cache
+      php artisan view:cache
+    startCommand: php artisan serve --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        sync: false
+      - key: APP_DEBUG
+        value: true
+      - key: DB_CONNECTION
+        value: sqlite
