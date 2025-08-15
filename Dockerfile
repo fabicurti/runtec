@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
 # 2. Configura Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 3. Configura diretório de trabalho
+# 3. Configura diretório de  trabalho
 WORKDIR /var/www/html
 
 # 4. Copia arquivos (excluindo node_modules para otimização)
