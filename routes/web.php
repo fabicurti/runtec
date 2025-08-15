@@ -6,6 +6,11 @@
     Route::get('/ping', function () {
         return 'pong';
     });
+    Route::get('/migrate-now', function () {
+        \Artisan::call('migrate', ['--force' => true]);
+        return 'Migrations executadas!';
+    });
+
 
     Route::get('/', function () {
         return view('welcome');
