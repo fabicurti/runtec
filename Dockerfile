@@ -9,7 +9,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 COPY . .
+COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+RUN chmod -R 775 storage bootstrap/cache
+
 
 EXPOSE 80
