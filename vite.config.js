@@ -5,12 +5,13 @@ export default defineConfig({
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
-            refresh: false, // ← desativa HMR no build
+            refresh: false,
         }),
     ],
     build: {
         manifest: true,
         outDir: 'public/build',
+        manifestFile: 'manifest.json', // força nome correto
         rollupOptions: {
             input: [
                 'resources/css/app.css',
@@ -19,4 +20,5 @@ export default defineConfig({
         },
     },
 });
+
 
