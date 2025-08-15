@@ -54,9 +54,7 @@ RUN chown -R www-data:www-data storage bootstrap/cache public/build \
 
 # 8) Configuração do Apache (vhost apontando para /public)
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
-
-RUN grep -q '^Listen 10000' /etc/apache2/ports.conf || echo 'Listen 10000' >> /etc/apache2/ports.conf
-
+RUN sed -i 's/^Listen .*/Listen 10000/' /etc/apache2/ports.conf
 # Garante que só seu site está ativo
 RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \
  && a2enconf servername \
