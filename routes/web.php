@@ -6,10 +6,13 @@
     Route::get('/ping', function () {
         return 'pong';
     });
-    Route::get('/migrate-now', function () {
-        \Artisan::call('migrate', ['--force' => true]);
-        return 'Migrations executadas!';
+    Route::get('/cache-now', function () {
+        \Artisan::call('config:cache');
+        \Artisan::call('route:cache');
+        \Artisan::call('view:cache');
+        return 'Cache feito!';
     });
+
 
 
     Route::get('/', function () {

@@ -2,20 +2,21 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
-    server: {
-        host: '0.0.0.0',
-        port: 5173,
-        cors: true,
-        origin: 'http://localhost:5173', // ← aqui!
-        hmr: {
-            host: 'localhost', // ou use o IP da máquina se estiver fora do container
-            protocol: 'ws',
-        },
-    },
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
-            refresh: true,
+            refresh: false, // ← desativa HMR no build
         }),
     ],
+    build: {
+        manifest: true,
+        outDir: 'public/build',
+        rollupOptions: {
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.js',
+            ],
+        },
+    },
 });
+

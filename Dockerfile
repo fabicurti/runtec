@@ -17,6 +17,7 @@ COPY . .
 
 # Copia configuração do Apache
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
+COPY public/build public/build
 
 # Instala dependências do Laravel
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
@@ -29,7 +30,10 @@ RUN chmod -R 775 storage bootstrap/cache \
 RUN php artisan config:clear \
     && php artisan route:list
 
-RUN php artisan migrate --force
+RUN php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan view:cache
+
 
 EXPOSE 80
 
