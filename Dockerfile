@@ -47,4 +47,7 @@ RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \
 EXPOSE 80
 
 # 13. Comando inicial
-CMD ["apache2-foreground"]
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+
