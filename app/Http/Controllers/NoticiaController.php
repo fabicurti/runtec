@@ -145,7 +145,7 @@ class NoticiaController extends Controller
 
         $response = Http::get($url);
 
-        if (!$response->successful()) {
+        if (!$response->successful()) {dd($response);
             return response()->json(['erro' => 'Falha ao consultar a API.'], 500);
         }
 
