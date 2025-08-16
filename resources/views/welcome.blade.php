@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Teste Runtec</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
+<x-app-layout>
 
 @auth
     <script>window.location.href = "{{ route('dashboard') }}";</script>
@@ -65,5 +58,4 @@
     </div>
     </x-guest-layout>
 @endauth
-</body>
-</html>
+</x-app-layout>
