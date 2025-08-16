@@ -144,7 +144,6 @@ class NoticiaController extends Controller
         $url = "https://api.nytimes.com/svc/archive/v1/{$ano}/{$mes}.json?api-key={$apiKey}";
 
         $response = Http::get($url);
-        dd($response);
         if (!$response->successful()) {
             return response()->json(['erro' => 'Falha ao consultar a API.'], 500);
         }
